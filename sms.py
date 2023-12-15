@@ -1,16 +1,17 @@
 import requests, time
 from consulta import *
 
+
 #Função principal do código
-def envio(telefone, nome ):
+def envio(numero, nome):
     url = "http://192.168.0.11/default/en_US/sms_info.html?type=sms"
 
     data = {
-        "line1": "1",
+        f"line{contador % 32 or 32}": "1",
         # "smskey": "6578abd0",
         "action": "SMS",
-        "telnum": telefone,
-        "smscontent": nome + "a PERNAMBUCANAS esta facilitando o pagamento do seu acordo!",
+        "telnum": numero,
+        "smscontent": "Prezado(a), use o 13º para programar o pgto do seu cartao ELO Pernambucanas. Desconto de ate 90% pra quem retornar HOJE no 08006061419 ou WhatsApp 11 35125911",
         "send": "Send"
     }
 
@@ -18,22 +19,34 @@ def envio(telefone, nome ):
 
     response = requests.post(url, data=data, auth=auth)
     
-    print('Enviei a frase (' + frase + ') para o numero '+ numero)
+    print('Enviei para o numero: '+ numero)
     print("Status Code:", response)
     #print("Response Text:", response.text)
 
-# salva todas as variaveis do arquivo consulta na função conectar
-resultados, num_linhas,df, conn = conectar()
 
-#variaveis abaixo e para a automação do link...
-# qtd = quantidadeDeLinhas()
-# #[linha][posicao da linha]
 
-contador = 0
-while contador <= num_linhas:
-    frase = resultados[contador][1]
-    numero = resultados[contador][0]
-    envio(numero, frase)
-    contador+=1
-    time.sleep(3)
-    
+def main():
+    telefones, nomes, num_linhas = conectar()
+    global contador
+    contador = 0
+    while contador <= num_linhas:
+        nome = nomes[contador]
+        telefone = telefones[contador]
+        envio(telefone, nome)
+        contador+=1
+        print(contador)
+        time.sleep(10)
+
+
+main()
+
+# contador = 0
+# envio('+5531989293584', 'Rafael')
+# time.sleep(10)
+# envio('+5531975634365', 'Vesley')
+# time.sleep(10)
+# envio('+5531996413050', 'Arthur')
+# # time.sleep(10)
+# # envio('+5531983344390', 'Diego')
+# # time.sleep(10)
+# # envio('+5531994940257', 'Thiago')
