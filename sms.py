@@ -5,6 +5,7 @@ from consulta import conectar
 import time
 import random
 
+<<<<<<< HEAD
 #Inicia uma classe para a interface e concatena as informações com as outras funções
 class SMSApp:
     def __init__(self, root):
@@ -21,6 +22,21 @@ class SMSApp:
         #Parametros da interface(tamanho)
         self.entry_lote = tk.Entry(root)
         self.entry_lote.pack(pady=10)
+=======
+
+#Função principal do código
+def envio(numero, nome):
+    url = "http://192.168.0.11/default/en_US/sms_info.html?type=sms"
+
+    data = {
+        f"line{contador % 32 or 32}": "1",
+        # "smskey": "6578abd0",
+        "action": "SMS",
+        "telnum": numero,
+        "smscontent": "Prezado(a), use o 13º para programar o pgto do seu cartao ELO Pernambucanas. Desconto de ate 90% pra quem retornar HOJE no 08006061419 ou WhatsApp 11 35125911",
+        "send": "Send"
+    }
+>>>>>>> dc94e7af89d8ea6566b57bbacfda20e2f39e977d
 
         #Parametros do botão(Referencia para iniciar a função e tamanho)
         self.start_button = tk.Button(root, text="Iniciar Envio", command=self.ConfirmaInicio)
@@ -65,6 +81,7 @@ class SMSApp:
         if confirm:
             self.IniciarSMS()
     
+<<<<<<< HEAD
             
     #Função para receber o número do lote e iniciar os envios
     def IniciarSMS(self):
@@ -133,3 +150,36 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = SMSApp(root)
     root.mainloop()
+=======
+    print('Enviei para o numero: '+ numero)
+    print("Status Code:", response)
+    #print("Response Text:", response.text)
+
+
+
+def main():
+    telefones, nomes, num_linhas = conectar()
+    global contador
+    contador = 0
+    while contador <= num_linhas:
+        nome = nomes[contador]
+        telefone = telefones[contador]
+        envio(telefone, nome)
+        contador+=1
+        print(contador)
+        time.sleep(10)
+
+
+main()
+
+# contador = 0
+# envio('+5531989293584', 'Rafael')
+# time.sleep(10)
+# envio('+5531975634365', 'Vesley')
+# time.sleep(10)
+# envio('+5531996413050', 'Arthur')
+# # time.sleep(10)
+# # envio('+5531983344390', 'Diego')
+# # time.sleep(10)
+# # envio('+5531994940257', 'Thiago')
+>>>>>>> dc94e7af89d8ea6566b57bbacfda20e2f39e977d
