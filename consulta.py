@@ -5,7 +5,7 @@ import pyodbc
 # AND SCORE_TEL IN (1,2)
 
 def conectar(numero_lote):
-    conn_str = 'DRIVER={SQL Server};SERVER=192.168.0.38;DATABASE=Nectar;UID=imaps;PWD=imaps'
+    conn_str = 'DRIVER={SQL Server};SERVER=***;DATABASE=***;UID=***;PWD=***'
     query = f"""
         SELECT  CONCAT('+55',RTRIM(DDD_TEL),RTRIM(TELEF_TEL)) AS TELEFONE, RTRIM(NOME_DEV) AS NOME
         FROM iMapsNectar_Contratos
